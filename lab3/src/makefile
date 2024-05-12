@@ -1,8 +1,10 @@
 CC=gcc
 FLAGS=-I
 
-all: sequential_min_max find_min_max parallel_min_max utils
+all: sequential_min_max find_min_max parallel_min_max utils launcher
 
+launcher: launcher.c
+	gcc -c launcher.c
 sequential_min_max: sequential_min_max.c find_min_max.h utils.h
 	gcc -c  sequential_min_max.c
 sequential_min_max.o:
