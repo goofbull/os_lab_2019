@@ -1,21 +1,22 @@
-CC=gcc
-FLAGS=-I
+CC = gcc
+CFLAGS = - I.
 
-all: sequential_min_max find_min_max parallel_min_max utils launcher
+all: parallel_min_max zombie process_memory
 
-launcher: launcher.c
-	gcc -c launcher.c
-sequential_min_max: sequential_min_max.c find_min_max.h utils.h
-	gcc -c  sequential_min_max.c
-sequential_min_max.o:
-	gcc -c sequential_min_max.c
-find_min_max: find_min_max.c find_min_max.h
-	gcc -c find_min_max.c 
-find_min_max.o:
-	gcc -c find_min_max.c
-parallel_min_max: parallel_min_max.c find_min_max.h utils.h
-	gcc -c parallel_min_max.c
-parallel_min_max.o:
-	gcc -c parallel_min_max.c
-utils: utils.h
-	gcc -c utils.h
+zombie: zombie.c
+	$(CC) -o zombie zombie.c
+	
+process_memory: process_memory.c
+	$(CC) -o process_memory process_memory.c
+
+parallel_min_max: utils.o find_min_max.o utils.h find_min_max.h
+	$(CC) -o parallel_min_max utils.o find_min_max.o parallel_min_max,c $(CFLAGS)
+	
+utils.o : utils.h
+	$(CC) -o utils.o -c utils.c
+
+find_min_max.o: utils.h find_min_max.h
+	$(CC) -o find_min_max.o -c find_min_max.c $(CFLAGS)
+
+clean:
+rm zombie process_memory parallel_min_max utils.o find_min_max.o
